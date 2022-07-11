@@ -8,19 +8,17 @@
   --field-hover: #e6e6e6;
   --btn-hover: #314158eb;
   --btn-click: #314158e6;
-  --o: #54d2d2;
+  --o: #488fb9;
   --x: #ff6150;
   --border: #555;
   --shadow: 0px 1px 4px rgba(0, 0, 0, 0.16);
 
-  /*   
-  --main-color: #f3b54a;
+  /* --main-color: #f3b54a;
   --white: #e4e4e4;
   --grey: #f0eef1;
   --black: #3d3d3d;
   --dark: #393b45;
   --red-2: #e9455d;
-  --blue: #488fb9;
   --red-1: #db3f59;
   --red: #fa5656;
   --yellow: #fac650;
@@ -86,6 +84,10 @@ h1 {
 
 .turn {
   font-size: 2.4rem;
+}
+
+.field {
+  font-size: 6.5rem;
 }
 
 .x {
@@ -156,6 +158,7 @@ main {
 .field {
   background-color: var(--field-bg);
   border: 1px solid var(--border);
+  text-align: center;
 }
 
 .field,
@@ -195,7 +198,7 @@ footer {
 }
 
 .fa-github:hover {
-  transform: scale(1.1) translateY(-5px);
+  transform: scale(1.2) translateY(-5px);
 }
 
 /*==============
