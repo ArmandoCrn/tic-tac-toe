@@ -1,13 +1,37 @@
 :root {
+  --header-bg: #314158;
+  --header-color: #ffcb00;
+  --player-color: #0c3a4a;
+  --o: #54d2d2;
+  --x: #ff6150;
+  --body-bg: #ddd;
+  --field-bg: #ededee;
+  --border: #555;
+  --shadow: 0px 1px 4px rgba(0, 0, 0, 0.16);
+
+  /* 
   --main-color: #f3b54a;
-  --white: #fffbfb;
+  --white: #e4e4e4;
   --grey: #f0eef1;
   --black: #3d3d3d;
-  --red: #fa5656;
+  --dark: #393b45;
+  --red-2: #e9455d;
   --blue: #488fb9;
+  --red-1: #db3f59;
+  --red: #fa5656;
+  --yellow: #fac650;
+  --cyan: #0dc0de;
+  --blue-0: #113b49;
+  --deep-blue: #111720;
+  --light-blue: #475466;
+  --bordeaux: #f8c89a;
   --light-green: #84f580;
-
-  --shadow: 0px 1px 4px rgba(0, 0, 0, 0.16);
+  --hover-blue: #596980;
+  --click-blue: #768ba8;
+  --palette-bg: #ebf1f4;
+  --palette-1: #072448;
+  --palette-3: #ffcb00;
+  --palette-4: #f8aa4b; */
 }
 
 /*========
@@ -28,7 +52,7 @@ html {
 
 body {
   /* TODO: */
-  background-color: var();
+  background-color: var(--body-bg);
 }
 
 a {
@@ -40,10 +64,47 @@ a {
   TYPOGRAPHY
 ============*/
 
+body {
+  font-family: "Signika Negative", sans-serif;
+}
+
+header {
+  font-family: "Press Start 2P", cursive;
+  color: var(--header-color);
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
 /*==========
   SPECIFIC
 ==========*/
+/*|-- Header --|*/
+header {
+  background-color: var(--header-bg);
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+/*|-- Main --|*/
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.gameboard {
+  width: 300px;
+  height: 300px;
+  border: 1px solid var(--border);
+}
 
 /*==============
   MEDIA QUERIES
 ==============*/
+/*
+TODO: ingrandisci l'header
+TODO: ingrandisci la gameboard. 400x400
+*/

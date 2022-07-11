@@ -23,6 +23,14 @@
       rel="stylesheet"
     />
 
+    <!-- Font - Press Start -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- FONTAWESOME - ICON -->
     <script
       src="https://kit.fontawesome.com/faff2b4ada.js"
@@ -30,5 +38,41 @@
     ></script>
   </head>
 
-  <body></body>
+  <body>
+    <div class="content">
+      <header>
+        <h1>Tic Tac Toe</h1>
+      </header>
+
+      <main>
+        <h3 id="text-message">Player Turn: <span class="turn">X</span></h3>
+
+        <div class="gameboard">
+          <!---->
+          <div class="field" data-index="0"></div>
+          <div class="field" data-index="1"></div>
+          <div class="field" data-index="2"></div>
+          <!---->
+          <div class="field" data-index="3"></div>
+          <div class="field" data-index="4"></div>
+          <div class="field" data-index="5"></div>
+          <!---->
+          <div class="field" data-index="6"></div>
+          <div class="field" data-index="7"></div>
+          <div class="field" data-index="8"></div>
+        </div>
+
+        <button>Restart</button>
+      </main>
+
+      <footer>
+        <p>
+          Copyright &copy; 2022 ArmandoCrn
+          <a href="https://github.com/ArmandoCrn">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </p>
+      </footer>
+    </div>
+  </body>
 </html>
