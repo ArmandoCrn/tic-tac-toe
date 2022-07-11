@@ -1,15 +1,19 @@
 :root {
+  --body-bg: #ddd;
+  --body-color: #397083;
   --header-bg: #314158;
   --header-color: #ffcb00;
-  --player-color: #0c3a4a;
+  --header-border: #f8aa4b;
+  --field-bg: #ededee;
+  --field-hover: #e6e6e6;
+  --btn-hover: #314158eb;
+  --btn-click: #314158e6;
   --o: #54d2d2;
   --x: #ff6150;
-  --body-bg: #ddd;
-  --field-bg: #ededee;
   --border: #555;
   --shadow: 0px 1px 4px rgba(0, 0, 0, 0.16);
 
-  /* 
+  /*   
   --main-color: #f3b54a;
   --white: #e4e4e4;
   --grey: #f0eef1;
@@ -30,8 +34,7 @@
   --click-blue: #768ba8;
   --palette-bg: #ebf1f4;
   --palette-1: #072448;
-  --palette-3: #ffcb00;
-  --palette-4: #f8aa4b; */
+  --palette-3: #ffcb00; */
 }
 
 /*========
@@ -51,7 +54,6 @@ html {
 }
 
 body {
-  /* TODO: */
   background-color: var(--body-bg);
 }
 
@@ -66,6 +68,7 @@ a {
 
 body {
   font-family: "Signika Negative", sans-serif;
+  color: var(--body-color);
 }
 
 header {
@@ -77,34 +80,160 @@ h1 {
   font-size: 1.5rem;
 }
 
+#text-message {
+  font-size: 1.5rem;
+}
+
+.turn {
+  font-size: 2.4rem;
+}
+
+.x {
+  color: var(--x);
+}
+
+.o {
+  color: var(--o);
+}
+
+#restart {
+  color: var(--header-color);
+  font-size: 2rem;
+  font-family: inherit;
+}
+
+footer {
+  font-size: 1.2rem;
+}
+
+footer a {
+  color: var(--header-border);
+}
+
 /*==========
   SPECIFIC
 ==========*/
+.content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 /*|-- Header --|*/
 header {
   background-color: var(--header-bg);
   padding: 1.5rem 1rem;
   text-align: center;
+  border-bottom: 3px solid var(--header-border);
 }
 
 /*|-- Main --|*/
 main {
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 3rem;
+}
+
+#text-message {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .gameboard {
   width: 300px;
   height: 300px;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.field {
+  background-color: var(--field-bg);
   border: 1px solid var(--border);
+}
+
+.field,
+#restart {
+  cursor: pointer;
+}
+
+.field:hover {
+  background-color: var(--field-hover);
+}
+
+#restart {
+  padding: 1rem 2rem;
+  background-color: var(--header-bg);
+  border: 2px solid var(--header-border);
+  border-radius: 5px;
+}
+
+#restart:hover {
+  background-color: var(--btn-hover);
+}
+
+#restart:active {
+  background-color: var(--btn-click);
+}
+
+/*|-- Footer --|*/
+footer {
+  margin-top: auto;
+  text-align: center;
+  padding-block: 1rem;
+}
+
+.fa-github {
+  margin-left: 0.4rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.fa-github:hover {
+  transform: scale(1.1) translateY(-5px);
 }
 
 /*==============
   MEDIA QUERIES
 ==============*/
-/*
-TODO: ingrandisci l'header
-TODO: ingrandisci la gameboard. 400x400
-*/
+@media screen and (min-width: 500px) {
+  header {
+    padding: 2rem 1rem;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+  }
+
+  main {
+    margin-top: 1rem;
+  }
+
+  #text-message {
+    font-size: 2rem;
+  }
+
+  .turn {
+    font-size: 3rem;
+  }
+
+  .gameboard {
+    width: 400px;
+    height: 400px;
+  }
+
+  footer {
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  h1 {
+    font-size: 3rem;
+  }
+}
