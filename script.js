@@ -11,11 +11,6 @@ const gameBoard = (() => {
     return gameboard;
   };
 
-  const getIndex = (index) => {
-    if (index > gameboard.length) return "Error";
-    return gameboard[index];
-  };
-
   const setIndex = (sign, index) => {
     if (index > gameboard.length) return "Error";
     gameboard[index] = sign;
@@ -27,12 +22,12 @@ const gameBoard = (() => {
     }
   };
 
-  return { getBoard, getIndex, setIndex, reset };
+  return { getBoard, setIndex, reset };
 })();
 
 const display = (() => {
   const fileds = document.querySelectorAll(".field");
-  const playerWin = document.querySelector("#text-message");
+  const playerWin = document.querySelector(".player");
   const playerTurn = document.querySelector(".turn");
   const restartBtn = document.querySelector("#restart");
 
@@ -45,29 +40,28 @@ const display = (() => {
       const sign = gameController.getPlayerTurn();
       const reverseSign = gameController.getReversPlayerTurn();
 
-      // Draw X and O in the gameboard
-      events.drawSign(sign, e.target);
-      events.changeClass(sign, e.target);
-
-      // Change player turn
-      events.drawSign(reverseSign, playerTurn);
-      events.changeClass(reverseSign, playerTurn);
+      gameController.playGame(sign, e.target, reverseSign, playerTurn);
 
       gameBoard.setIndex(sign, index);
-      gameController.roundPlus();
       console.log(gameBoard.getBoard());
     })
   );
 
-  restartBtn.addEventListener("click", () => {});
+  restartBtn.addEventListener("click", () => {
+    fileds.forEach((field) => (field.innerText = ""));
+    gameController.resetGame();
+    gameBoard.reset();
+    playerWin.innerText = "Player Turn:";
+    events.drawSign("X", playerTurn);
+    events.changeClass("X", playerTurn);
+  });
 })();
 
 const gameController = (() => {
-  const player1 = Player("X");
-  const player2 = Player("O");
-
   let round = 0;
   let isOver = false;
+  const player1 = Player("X");
+  const player2 = Player("O");
 
   const getPlayerTurn = () => {
     if (round % 2 === 1) {
@@ -85,11 +79,26 @@ const gameController = (() => {
     }
   };
 
+  const playGame = (sign, target, reverseSign, targetTurn) => {
+    // Draw X and O in the gameboard
+    events.drawSign(sign, target);
+    events.changeClass(sign, target);
+
+    // Change player turn
+    events.drawSign(reverseSign, targetTurn);
+    events.changeClass(reverseSign, targetTurn);
+    round++;
+  };
+
+  const resetGame = () => {
+    round = 0;
+    isOver = false;
+  };
+
   const getRound = () => round;
-  const roundPlus = () => ++round;
   const getOver = () => isOver;
 
-  return { getOver, getRound, roundPlus, getPlayerTurn, getReversPlayerTurn };
+  return { getOver, getRound, playGame, resetGame, getPlayerTurn, getReversPlayerTurn };
 })();
 
 const events = (() => {

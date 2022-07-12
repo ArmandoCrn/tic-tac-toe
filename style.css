@@ -78,7 +78,7 @@ h1 {
   font-size: 1.5rem;
 }
 
-#text-message {
+.text-message {
   font-size: 1.5rem;
 }
 
@@ -140,7 +140,7 @@ main {
   user-select: none;
 }
 
-#text-message {
+.text-message {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -218,7 +218,7 @@ footer {
     margin-top: 1rem;
   }
 
-  #text-message {
+  .text-message {
     font-size: 2rem;
   }
 
