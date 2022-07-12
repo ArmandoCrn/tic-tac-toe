@@ -5,7 +5,7 @@ const Player = (sign) => {
 };
 
 const gameBoard = (() => {
-  const gameboard = ["X", "", "", "", "", "", "", "", ""];
+  const gameboard = ["", "", "", "", "", "", "", "", ""];
 
   const getBoard = () => {
     return gameboard;
@@ -16,7 +16,7 @@ const gameBoard = (() => {
     return gameboard[index];
   };
 
-  const setIntex = (index, sign) => {
+  const setIndex = (sign, index) => {
     if (index > gameboard.length) return "Error";
     gameboard[index] = sign;
   };
@@ -27,25 +27,39 @@ const gameBoard = (() => {
     }
   };
 
-  return { getBoard, getIndex, setIntex, reset };
+  return { getBoard, getIndex, setIndex, reset };
 })();
 
 const display = (() => {
   const fileds = document.querySelectorAll(".field");
-  const playerTurn = document.querySelector("#text-message");
+  const playerWin = document.querySelector("#text-message");
+  const playerTurn = document.querySelector(".turn");
   const restartBtn = document.querySelector("#restart");
 
   fileds.forEach((field) =>
     field.addEventListener("click", (e) => {
-      if (gameController.getOver()) return;
+      if (gameController.getOver() || gameController.getRound() === 9) return;
+      if (e.target.innerText !== "") return;
 
       const index = e.target.dataset.index;
-      const sign = gameController.getPlaerTurn();
+      const sign = gameController.getPlayerTurn();
+      const reverseSign = gameController.getReversPlayerTurn();
 
+      // Draw X and O in the gameboard
       events.drawSign(sign, e.target);
+      events.changeClass(sign, e.target);
+
+      // Change player turn
+      events.drawSign(reverseSign, playerTurn);
+      events.changeClass(reverseSign, playerTurn);
+
+      gameBoard.setIndex(sign, index);
       gameController.roundPlus();
+      console.log(gameBoard.getBoard());
     })
   );
+
+  restartBtn.addEventListener("click", () => {});
 })();
 
 const gameController = (() => {
@@ -55,7 +69,7 @@ const gameController = (() => {
   let round = 0;
   let isOver = false;
 
-  const getPlaerTurn = () => {
+  const getPlayerTurn = () => {
     if (round % 2 === 1) {
       return player2.getSign();
     } else {
@@ -63,24 +77,43 @@ const gameController = (() => {
     }
   };
 
+  const getReversPlayerTurn = () => {
+    if (round % 2 === 1) {
+      return player1.getSign();
+    } else {
+      return player2.getSign();
+    }
+  };
+
   const getRound = () => round;
   const roundPlus = () => ++round;
   const getOver = () => isOver;
 
-  return { getOver, getRound, roundPlus, getPlaerTurn };
+  return { getOver, getRound, roundPlus, getPlayerTurn, getReversPlayerTurn };
 })();
 
 const events = (() => {
   const drawSign = (sign, target) => {
     target.innerText = sign;
-
-    /*
-    if ();
-    qui ci metti poi la classe per decidere il colore
-    */
   };
 
-  return { drawSign };
+  const changeClass = (sign, target) => {
+    let addClass;
+    let removeClass;
+
+    if (sign === "X") {
+      removeClass = "o";
+      addClass = "x";
+    } else {
+      removeClass = "x";
+      addClass = "o";
+    }
+
+    target.classList.remove(removeClass);
+    target.classList.add(addClass);
+  };
+
+  return { drawSign, changeClass };
 })();
 
 /**
