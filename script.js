@@ -11,6 +11,10 @@ const gameBoard = (() => {
     return gameboard;
   };
 
+  const getIndex = (i) => {
+    return gameboard[i];
+  };
+
   const setIndex = (sign, index) => {
     if (index > gameboard.length) return "Error";
     gameboard[index] = sign;
@@ -22,7 +26,7 @@ const gameBoard = (() => {
     }
   };
 
-  return { getBoard, setIndex, reset };
+  return { getBoard, getIndex, setIndex, reset };
 })();
 
 const display = (() => {
@@ -40,10 +44,8 @@ const display = (() => {
       const sign = gameController.getPlayerTurn();
       const reverseSign = gameController.getReversPlayerTurn();
 
-      gameController.playGame(sign, e.target, reverseSign, playerTurn);
-
       gameBoard.setIndex(sign, index);
-      console.log(gameBoard.getBoard());
+      gameController.playGame(sign, e.target, reverseSign, playerTurn, playerWin, index);
     })
   );
 
@@ -64,30 +66,56 @@ const gameController = (() => {
   const player2 = Player("O");
 
   const getPlayerTurn = () => {
-    if (round % 2 === 1) {
-      return player2.getSign();
-    } else {
-      return player1.getSign();
-    }
+    return round % 2 === 1 ? player2.getSign() : player1.getSign();
   };
 
   const getReversPlayerTurn = () => {
-    if (round % 2 === 1) {
-      return player1.getSign();
-    } else {
-      return player2.getSign();
-    }
+    return round % 2 === 1 ? player1.getSign() : player2.getSign();
   };
 
-  const playGame = (sign, target, reverseSign, targetTurn) => {
+  const playGame = (sign, target, reverseSign, targetTurn, playerWin, index) => {
     // Draw X and O in the gameboard
     events.drawSign(sign, target);
     events.changeClass(sign, target);
 
+    if (winner(+index)) {
+      isOver = true;
+      playerWin.innerText = "The winner is";
+      events.drawSign(sign, playerTurn);
+      events.changeClass(sign, playerTurn);
+      return;
+    }
+
     // Change player turn
     events.drawSign(reverseSign, targetTurn);
     events.changeClass(reverseSign, targetTurn);
+
     round++;
+
+    if (round === 9) {
+      events.drawSign("!", targetTurn);
+      events.drawSign("It's a draw", playerWin);
+      return;
+    }
+  };
+
+  const winner = (index) => {
+    const win = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    return win
+      .filter((array) => array.includes(index))
+      .some((combination) =>
+        combination.every((sign) => gameBoard.getIndex(sign) === getPlayerTurn())
+      );
   };
 
   const resetGame = () => {
@@ -124,73 +152,3 @@ const events = (() => {
 
   return { drawSign, changeClass };
 })();
-
-/**
- * Array di podizioni che contine solo i numeri di dove la x posiziona
- * e dove la y posiziona
- * quindi saranno
- * const PlayerX = []
- * const PlayerO = []
- *
- * potranno andare da un minimo di 0 a 8
- *
- * 0 1 2
- * 3 4 5
- * 6 7 8
- *
- * crea un array che contine tutte le possibili triplette di numeri per decidere
- * il vincitore
- *
- * crea una variabile isDone = false e diventa true quando finisce il gioco
- * crea una variabile turn = 1
- * turn ++ ad ogni click
- *
- * if turn === 9 è un pareggio e quindi succedono le cose del pareggio
- */
-
-/**
- * Quando si preme una casella cosa succede
- * isOver = false;
- *
- * turn = 0
- *
- * una funzione andrà a registrare il numero della casella nell'array del giocatore x
- *
- * turn++
- *
- * poi una funzione andrà a mettere a schermo la x
- * e dovrà anche mettere la classe x a schermo per far diventare il colore del testo rosso
- * grazie al this.data.index/e.target.data.index (?) avremo il numero di dove dovremo
- * far mettere la X a schermo
- *
- * poi tocca al O
- * funzione che fa cambiare il player turn a schermo
- * e anche la class in x ad o e viceversa
- *
- * si preme e succede grosso modo la stessa cosa di prima
- * solo che anzichè mettere roba nell'array del player x andanno nel player O
- * e dovrà anche mettere la classe o a schermo per far diventare il colore del testo blu
- *
- *
- * andremo poi sempre a prendere l'index e far comparire il O
- *
- * turn++
- *
- * quando il turn > 4
- * inizia la verifica del vincitore
- * questa viene effettuata cercando se l'array del player x o y hanno i tre numeri
- * per fare tris
- * 
- * FIXME: 
- * const winConditions = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
- *
- */
