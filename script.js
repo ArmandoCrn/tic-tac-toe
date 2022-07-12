@@ -1,3 +1,88 @@
+const Player = (sign) => {
+  const getSign = () => sign;
+
+  return { getSign };
+};
+
+const gameBoard = (() => {
+  const gameboard = ["X", "", "", "", "", "", "", "", ""];
+
+  const getBoard = () => {
+    return gameboard;
+  };
+
+  const getIndex = (index) => {
+    if (index > gameboard.length) return "Error";
+    return gameboard[index];
+  };
+
+  const setIntex = (index, sign) => {
+    if (index > gameboard.length) return "Error";
+    gameboard[index] = sign;
+  };
+
+  const reset = () => {
+    for (let i = 0; i < gameboard.length; i++) {
+      gameboard[i] = "";
+    }
+  };
+
+  return { getBoard, getIndex, setIntex, reset };
+})();
+
+const display = (() => {
+  const fileds = document.querySelectorAll(".field");
+  const playerTurn = document.querySelector("#text-message");
+  const restartBtn = document.querySelector("#restart");
+
+  fileds.forEach((field) =>
+    field.addEventListener("click", (e) => {
+      if (gameController.getOver()) return;
+
+      const index = e.target.dataset.index;
+      const sign = gameController.getPlaerTurn();
+
+      events.drawSign(sign, e.target);
+      gameController.roundPlus();
+    })
+  );
+})();
+
+const gameController = (() => {
+  const player1 = Player("X");
+  const player2 = Player("O");
+
+  let round = 0;
+  let isOver = false;
+
+  const getPlaerTurn = () => {
+    if (round % 2 === 1) {
+      return player2.getSign();
+    } else {
+      return player1.getSign();
+    }
+  };
+
+  const getRound = () => round;
+  const roundPlus = () => ++round;
+  const getOver = () => isOver;
+
+  return { getOver, getRound, roundPlus, getPlaerTurn };
+})();
+
+const events = (() => {
+  const drawSign = (sign, target) => {
+    target.innerText = sign;
+
+    /*
+    if ();
+    qui ci metti poi la classe per decidere il colore
+    */
+  };
+
+  return { drawSign };
+})();
+
 /**
  * Array di podizioni che contine solo i numeri di dove la x posiziona
  * e dove la y posiziona

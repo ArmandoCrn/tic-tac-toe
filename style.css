@@ -137,6 +137,7 @@ main {
   justify-content: center;
   align-items: center;
   gap: 3rem;
+  user-select: none;
 }
 
 #text-message {
