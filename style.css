@@ -87,7 +87,7 @@ h1 {
 }
 
 .field {
-  font-size: 6.5rem;
+  font-size: 4.5rem;
 }
 
 .x {
@@ -229,6 +229,10 @@ footer {
   .gameboard {
     width: 400px;
     height: 400px;
+  }
+
+  .field {
+    font-size: 6.5rem;
   }
 
   footer {
